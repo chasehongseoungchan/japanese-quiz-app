@@ -11,8 +11,8 @@ let currentChar = "";
 let score = 0;
 let totalQuestions = 0;
 let unseenChars = [];
-let wrongChars = []; // 오답 기록 배열
-let isReviewMode = false; // 오답 노트 모드 플래그
+let wrongChars = [];
+let isReviewMode = false;
 
 function navigate(renderFunction) {
     const mainContent = document.getElementById('main_content');
@@ -40,7 +40,7 @@ function renderMenu() {
     mainContent.innerHTML = `
         <div class="screen-container">
             <div class="app-icon">あ</div>
-            <h1 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1rem;">원하는 퀴즈를 선택하세요</h1>
+            <h1>원하는 퀴즈를 선택하세요</h1>
             <p style="font-size: 1.125rem; color: #6c757d; margin-bottom: 1.5rem;">현재 모드: ${modeText}</p>
             <div class="menu-buttons">
                 <button onclick="navigate(() => showGameModeMenu('hiragana'))" class="quiz-button">히라가나</button>
@@ -57,11 +57,11 @@ function showGameModeMenu(quizType) {
     const quizTypeText = {hiragana: "히라가나", katakana: "가타카나", advanced: "탁음 등"}[quizType];
 
     mainContent.innerHTML = `
-        <div class="screen-container">
+        <div class="screen-container select-mode-screen">
             <button onclick="navigate(renderMenu)" class="top-bar-button" style="position:absolute; top: calc(1rem + env(safe-area-inset-top, 0px)); left: calc(1rem + env(safe-area-inset-left, 0px));">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
             </button>
-            <h1 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1rem;">${quizTypeText} 학습 방식을 선택하세요</h1>
+            <h1>${quizTypeText} 학습 방식을 선택하세요</h1>
             <div class="menu-buttons">
                 <button onclick="navigate(() => startQuiz('flashcard'))" class="quiz-button">플래시카드 (객관식)</button>
                 <button onclick="navigate(() => startQuiz('typing'))" class="quiz-button">타이핑 (주관식)</button>
@@ -109,7 +109,7 @@ function showResultsScreen() {
     mainContent.innerHTML = `
         <div class="screen-container">
             <div class="app-icon">📊</div>
-            <h1 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1rem;">퀴즈 결과</h1>
+            <h1>퀴즈 결과</h1>
             <p style="font-size: 1.5rem; color: #6c757d; margin-bottom: 2rem;">${resultMessage}</p>
             <div class="menu-buttons">
                 <button onclick="navigate(startReviewQuiz)" class="quiz-button">오답 노트 시작하기 (${wrongChars.length}개)</button>
@@ -125,7 +125,7 @@ function showCompletionScreen() {
     mainContent.innerHTML = `
         <div class="screen-container">
             <div class="app-icon">🎉</div>
-            <h1 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1rem;">퀴즈 완료!</h1>
+            <h1>퀴즈 완료!</h1>
             <p style="font-size: 1.125rem; color: #6c757d; margin-bottom: 1.5rem;">모든 문제를 완벽하게 학습했습니다!</p>
             <div class="menu-buttons">
                 <button onclick="navigate(renderMenu)" class="quiz-button">메인 메뉴로 돌아가기</button>
@@ -153,7 +153,7 @@ function startQuiz(gameMode) {
 
 function startReviewQuiz() {
     isReviewMode = true;
-    unseenChars = [...new Set(wrongChars)]; // 중복 제거
+    unseenChars = [...new Set(wrongChars)];
     wrongChars = [];
     shuffle(unseenChars);
     
@@ -166,12 +166,12 @@ function nextQuestion() {
     if (unseenChars.length === 0) {
         if (wrongChars.length > 0) {
             if (isReviewMode) {
-                startReviewQuiz(); // 오답 노트에서 또 틀리면 다시 오답 노트 시작
+                startReviewQuiz();
             } else {
-                showResultsScreen(); // 첫 사이클 끝나고 틀린게 있으면 결과 화면
+                showResultsScreen();
             }
         } else {
-            showCompletionScreen(); // 틀린게 하나도 없으면 최종 완료
+            showCompletionScreen();
         }
         return;
     }
@@ -183,13 +183,11 @@ function nextQuestion() {
     const questionContent = document.getElementById('question_content');
     questionContent.innerHTML = `<span class="question-label">${questionText}</span>`;
 
-    // ✅ FIX: 입력창 사라지는 버그 해결
     const interactionArea = document.querySelector('.typing-interaction-wrapper, .buttons-grid');
     if (interactionArea) {
-        interactionArea.style.display = ''; // display 속성 초기화
+        interactionArea.style.display = '';
     }
 
-    // 모든 모드에서 항상 스크롤을 맨 위로 이동
     setTimeout(() => {
         window.scrollTo(0, 0);
     }, 50);
@@ -240,7 +238,7 @@ function setupTypingInput() {
 
 function handleSkip() {
     wrongChars.push(currentChar);
-    showAnswerAndProceed(true); // isSkipped = true
+    showAnswerAndProceed(true);
 }
 
 function checkFlashcardAnswer(button) {
@@ -272,11 +270,11 @@ function checkTypingAnswer() {
         input.disabled = true;
         setTimeout(nextQuestion, 300);
     } else {
-        wrongChars.push(currentChar); // 오답 기록
+        wrongChars.push(currentChar);
         input.classList.add('incorrect');
         setTimeout(() => {
             input.classList.remove('incorrect');
-            nextQuestion(); // 정답 여부와 관계없이 다음 문제로
+            nextQuestion();
         }, 500);
     }
 }
