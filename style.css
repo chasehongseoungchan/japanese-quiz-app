@@ -1,10 +1,10 @@
-/* ...style.css... */
+/* style.css */
 :root {
     --background-color: #f8f9fa;
     --text-color: #212529;
-    --card-bg-color: #f4f5fa;      /* 더 밝은 그레이 */
-    --button-bg-color: #f4f5fa;    /* 더 밝은 그레이 */
-    --button-hover-bg-color: #e9ebf2;
+    --card-bg-color: #ffffff;
+    --button-bg-color: #ffffff;
+    --button-hover-bg-color: #f1f3f5;
     --accent-color: #007bff;
     --correct-color: #28a745;
     --incorrect-color: #dc3545;
@@ -19,9 +19,9 @@ html {
 }
 
 body {
-    height: 100dvh; /* iOS 키보드 대응 (동적 뷰포트 높이) */
+    height: 100dvh;
     margin: 0;
-    overflow: hidden; /* Prevent body scrolling */
+    overflow: auto; 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
@@ -37,7 +37,7 @@ body {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* 스크롤 완전 방지 */
+    overflow: visible; 
     transition: opacity 0.15s ease-out;
 }
 #main_content.fade-out {
@@ -54,17 +54,16 @@ body {
 }
 
 .screen-container {
-    justify-content: flex-start; /* 기존 center에서 flex-start로 변경 */
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
-    padding: calc(0.5rem + env(safe-area-inset-top, 0px)) 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px)); /* 상단 패딩 줄임 */
-    height: 100%; /* 세로 중앙 정렬을 위해 추가 */
+    padding: calc(0.5rem + env(safe-area-inset-top, 0px)) 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
 }
 
 .main-container {
     padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 1rem) 0 env(safe-area-inset-left, 1rem);
     min-height: 100%;
-    padding-top: 0.5rem; /* 기존 env(safe-area-inset-top, 0px)에서 0.5rem로 변경 */
+    padding-top: 0.5rem;
     padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
@@ -72,12 +71,11 @@ body.flashcard-mode .main-container {
     padding-top: 0.5rem !important;
 }
 body.flashcard-mode .top-bar {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.25rem !important;
-    margin-bottom: 0.25rem !important;
+    padding: 0.25rem 0.25rem !important;
+    margin-bottom: 0.1rem !important;
 }
 body.flashcard-mode .question-box {
-    margin-bottom: 0.5rem !important; /* 기존 0.25rem에서 0.5rem로 변경 (더 붙게 하려면 0.1rem도 가능) */
+    margin-bottom: 0.5rem !important;
 }
 
 .app-icon {
@@ -99,9 +97,9 @@ body.flashcard-mode .question-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 0.5rem; /* 기존 1rem에서 0.5rem로 변경 */
-    margin-bottom: 0.25rem; /* 기존 0.5rem에서 0.25rem로 변경 */
-    flex-shrink: 0; /* Prevent top bar from shrinking */
+    padding: 0.25rem 0.5rem; 
+    margin-bottom: 0.1rem; 
+    flex-shrink: 0;
 }
 
 .top-bar-button {
@@ -120,21 +118,17 @@ body.flashcard-mode .question-box {
     flex-direction: column;
     background-color: var(--card-bg-color);
     border-radius: 1.5rem;
-    /* box-shadow를 더 진하게, 레이어 추가 */
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.10),
-        0 8px 24px rgba(0, 0, 0, 0.13);
-    /* border 추가로 경계 강조 */
-    border: 1.5px solid var(--border-color);
-    margin-bottom: 0.125rem; /* 기존 0.5rem에서 0.125rem로 변경 (더 붙게 하려면 0.1rem도 가능) */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    margin-bottom: 0.125rem;
     padding: 1rem;
+    border: none;
     transition: height 0.2s ease-out;
 }
 
 body.flashcard-mode .question-box {
      height: 45vh;
      flex-shrink: 0;
-     margin-bottom: 0.5rem !important; /* 기존 0.25rem에서 0.5rem로 변경 (더 붙게 하려면 0.1rem도 가능) */
+     margin-bottom: 0.5rem !important;
 }
 
 body.typing-mode .question-box {
@@ -166,47 +160,31 @@ body.typing-mode .question-box {
     transition: margin-top 0.2s ease-out;
 }
 
-/* ✅ FIX: flashcard 모드에서만 하단에 고정 */
 .buttons-grid {
-    margin-top: 0.5rem !important; /* 기존 auto에서 0.5rem로 변경 (더 붙게 하려면 0.25rem도 가능) */
+    margin-top: 0.5rem !important;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
 }
 
-/* ✅ FIX: typing 모드에서는 바로 아래에 붙도록 함 */
 .typing-interaction-wrapper {
      margin-top: 0.5rem;
 }
 
-.menu-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-    max-width: 400px;
-}
+.menu-buttons { display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 400px; }
 
 .quiz-button {
     width: 100%;
-    min-width: unset;
-    max-width: unset;
     padding: 1.5rem 1rem;
     background-color: var(--button-bg-color);
     border-radius: 1rem;
     font-size: 1.5rem;
     font-weight: 500;
     color: var(--text-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border: 1px solid var(--border-color);
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s;
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.10),
-        0 8px 24px rgba(0, 0, 0, 0.13);
-    border: 1.5px solid var(--border-color);
-    background-color: var(--card-bg-color);
 }
 .quiz-button:active {
     transform: scale(0.98);
@@ -264,54 +242,143 @@ body.typing-mode .question-box {
   10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); }
 }
 
-/* 박스 효과에서 .buttons-grid 제외 */
-.question-box,
-.app-icon,
-.main-container,
-.screen-container,
-.typing-form-wrapper {
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.10),
-        0 8px 24px rgba(0, 0, 0, 0.13);
-    border: 1.5px solid var(--border-color);
-    background-color: var(--card-bg-color);
+/* ======================================================= */
+/* 2. 드래그 모드 (표 채우기) 전용 스타일 (최적화) */
+/* ======================================================= */
+
+body.drag-mode {
+    padding-bottom: 0; 
 }
 
-/* 버튼 그룹은 배경만 */
-.buttons-grid {
-    background-color: transparent;
+.drag-interaction-wrapper {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.5rem;
+    overflow: visible; 
+}
+
+/* 드래그 그리드 컨테이너: 세로 스크롤을 담당 */
+#drag_grid_container {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.drag-grid {
+    display: flex; 
+    flex-direction: column;
+    min-width: 100%;
+}
+
+
+/* Grid layout: 왼쪽 레이블(40px) + 5개 단 컬럼(각 1fr) */
+.grid-row {
+    display: grid; 
+    grid-template-columns: 40px repeat(5, 1fr); /* [최적화] 너비 50px -> 40px */
+    grid-auto-rows: 45px; /* [최적화] 행 높이 50px -> 45px */
+    gap: 0.3rem; /* [최적화] 간격 0.4rem -> 0.3rem */
+    align-items: center;
+    margin-bottom: 0.3rem; /* [최적화] 마진 0.4rem -> 0.3rem */
+    width: 100%; 
+    min-width: 100%;
+}
+
+/* Left-side row label (한글 아/카/사 등) */
+.row-label {
+    grid-column: 1; 
+    height: 100%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border-radius: 0.3rem; /* [최적화] 둥근 모서리 축소 */
+    background: var(--disabled-bg-color); 
+    color: var(--text-color);
+    font-size: 0.8rem; /* [최적화] 폰트 크기 축소 */
+    flex-shrink: 0;
+}
+
+/* Header corner (왼쪽 최상단) */
+.header-corner {
+    width: 40px; /* [최적화] 너비 50px -> 40px */
+    height: 35px; /* [최적화] 높이 40px -> 35px */
+    background: transparent;
     border: none;
+}
+
+/* Column headers (단명: 아단, 이단 등) */
+.col-header {
+    height: 35px; /* [최적화] 높이 40px -> 35px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    background: var(--accent-color);
+    border-radius: 0.3rem; /* [최적화] 둥근 모서리 축소 */
+    font-size: 0.85rem; /* [최적화] 폰트 크기 축소 */
+    font-weight: 600;
+}
+
+/* Drop cell styling (중앙 5열) */
+.drop-cell {
+    height: 100%;
+    min-height: 45px; /* [최적화] 최소 높이 50px -> 45px */
+    background: white;
+    border-radius: 0.3rem; /* [최적화] 둥근 모서리 축소 */
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem; /* [최적화] 폰트 크기 축소 */
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+.drop-cell:not([aria-disabled="true"]):empty {
+    background-color: #f1f3f5;
+}
+
+/* non-droppable placeholders (빈칸) */
+.empty-cell {
+    background: transparent;
+    border: none;
+    pointer-events: none;
+}
+
+/* feedback styles */
+.drop-cell.drag-over { outline: 3px solid rgba(0,123,255,0.12); transform: translateY(-2px); background-color: #ffe066 !important; }
+.drop-cell.correct { background: var(--correct-color); color: white; border-color: var(--correct-color); }
+.drop-cell.incorrect { background: var(--incorrect-color); color: white; border-color: var(--incorrect-color); animation: shake 0.5s; }
+
+/* Drag target container (아래 중앙 배치) */
+.drag-container {
+    flex-shrink: 0;
+    margin-top: 0.5rem; /* [최적화] 마진 축소 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.75rem 0 calc(1rem + env(safe-area-inset-bottom, 0px)) 0;
+    
+    background-color: transparent; 
+    border-top: none; 
     box-shadow: none;
 }
 
-/* 각 버튼에 박스 효과 적용 */
-.quiz-button {
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.10),
-        0 8px 24px rgba(0, 0, 0, 0.13);
-    border: 1.5px solid var(--border-color);
-    background-color: var(--card-bg-color);
+/* 드래그 대상 스타일: draggable-kana 자체는 흰색 배경 유지 */
+.draggable-kana {
+    font-size: 3rem; /* [최적화] 폰트 크기 축소 */
+    width: 80px; /* [최적화] 크기 축소 */
+    height: 80px; /* [최적화] 크기 축소 */
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg-color); 
+    border: 1px solid var(--border-color);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    cursor: grab;
+    touch-action: none;
 }
-
-/* 학습 방식 선택 페이지 제목 폰트 더 작게 */
-.screen-container h1 {
-    font-size: 1.5rem; /* 더 작게 */
-    font-weight: 700;
-    margin-bottom: 1rem;
-    line-height: 1.3;
-}
-
-/* 설명글과 선택 박스 사이 간격 더 크게 */
-.screen-container > p {
-    margin-bottom: 3.5rem !important;
-}
-
-/* 학습 방식 선택 박스 위치 원상복구 */
-.screen-container > .menu-buttons {
-    margin-top: 0 !important;
-}
-
-.select-mode-screen > .menu-buttons {
-    margin-top: 7rem !important;
-}
-/* ...style.css... */
