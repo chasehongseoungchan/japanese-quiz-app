@@ -353,10 +353,9 @@ body.drag-mode {
 .drop-cell.correct { background: var(--correct-color); color: white; border-color: var(--correct-color); }
 .drop-cell.incorrect { background: var(--incorrect-color); color: white; border-color: var(--incorrect-color); animation: shake 0.5s; }
 
-/* Drag target container (아래 중앙 배치) */
 .drag-container {
     flex-shrink: 0;
-    margin-top: 0.5rem; /* [최적화] 마진 축소 */
+    margin-top: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -367,18 +366,44 @@ body.drag-mode {
     box-shadow: none;
 }
 
-/* 드래그 대상 스타일: draggable-kana 자체는 흰색 배경 유지 */
+/* 드래그 대상 스타일: 크기를 글자에 맞게 최소화 */
 .draggable-kana {
-    font-size: 3rem; /* [최적화] 폰트 크기 축소 */
-    width: 80px; /* [최적화] 크기 축소 */
-    height: 80px; /* [최적화] 크기 축소 */
-    border-radius: 0.75rem;
+    /* 문자 크기에 딱 맞게 축소 */
+    font-size: 1.6rem;   /* 글자 가독성 유지하는 크기 */
+    width: 44px;         /* 셀 높이와 거의 동일하게 */
+    height: 44px;
+    line-height: 1;
+    padding: 0;          /* 내부 여백 제거로 문자 중심 정렬 */
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--card-bg-color); 
     border: 1px solid var(--border-color);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
     cursor: grab;
     touch-action: none;
+}
+
+/* 드래그 클론이 뜰 때도 동일한 크기로 보이도록 보장 */
+.draggable-kana.dragging-clone {
+    width: 44px;
+    height: 44px;
+    font-size: 1.6rem;
+    transform: translateZ(0);
+    will-change: left, top;
+}
+
+/* 미디어 쿼리: 작은 화면에서도 문자에 딱 맞게 유지 */
+@media (max-width: 420px) {
+    .draggable-kana {
+        font-size: 1.5rem;
+        width: 40px;
+        height: 40px;
+    }
+    .draggable-kana.dragging-clone {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
 }
